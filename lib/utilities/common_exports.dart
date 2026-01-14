@@ -3,6 +3,8 @@ export 'dart:developer' hide Flow;
 export 'dart:async' hide AsyncError;
 export 'package:flutter/material.dart';
 export 'package:flutter/services.dart';
+export 'package:firebase_core/firebase_core.dart';
+export 'package:repalogic_messanger/firebase_options.dart';
 export 'package:repalogic_messanger/utilities/app_fonts.dart';
 export 'package:repalogic_messanger/utilities/app_icons.dart';
 export 'package:repalogic_messanger/utilities/app_theme.dart';
