@@ -27,10 +27,11 @@ android {
         applicationId = "com.example.repalogic_messanger"
         // You can update the following values to match your application needs.
         // For more information, see: https://flutter.dev/to/review-gradle-config.
-        minSdk = flutter.minSdkVersion
+        minSdk = flutter.minSdkVersion  // Required for Google Play Services
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
+        multiDexEnabled = true
     }
 
     buildTypes {
@@ -44,4 +45,11 @@ android {
 
 flutter {
     source = "../.."
+}
+
+dependencies {
+    // Google Play Services for authentication
+    implementation("com.google.android.gms:play-services-auth:21.2.0")
+    // Multidex support
+    implementation("androidx.multidex:multidex:2.0.1")
 }

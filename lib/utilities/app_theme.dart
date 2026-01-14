@@ -14,7 +14,7 @@ class AppTheme {
     iconTheme: const IconThemeData(color: AppColors.primaryColor),
     appBarTheme: const AppBarTheme(
       backgroundColor: AppColors.primaryColor,
-      iconTheme: IconThemeData(color: AppColors.primaryColor),
+      iconTheme: IconThemeData(color: AppColors.white),
       titleTextStyle: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w700,

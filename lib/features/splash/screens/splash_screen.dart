@@ -1,13 +1,34 @@
 import 'package:repalogic_messanger/utilities/common_exports.dart';
 
-class SplashScreen extends StatefulWidget {
+class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
 
   @override
-  State<SplashScreen> createState() => _SplashScreenState();
+  ConsumerState<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreenState extends State<SplashScreen> {
+class _SplashScreenState extends ConsumerState<SplashScreen> {
+  @override
+  void initState() {
+    super.initState();
+    _checkAuthStatus();
+  }
+
+  Future<void> _checkAuthStatus() async {
+    await Future.delayed(const Duration(seconds: 2));
+
+    if (!mounted) return;
+
+    final authRepository = ref.read(authRepositoryProvider);
+    final isSignedIn = authRepository.isSignedIn();
+
+    if (isSignedIn) {
+      context.pushNamedAndRemoveUntil(Routes.chatRoomsScreen);
+    } else {
+      context.pushNamedAndRemoveUntil(Routes.loginScreen);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,9 +75,7 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             const SizedBox(height: 48),
 
-            const CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(AppColors.primaryColor),
-            ),
+            const CircularProgressIndicator(color: AppColors.primaryColor),
           ],
         ),
       ),

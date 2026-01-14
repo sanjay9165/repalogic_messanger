@@ -44,3 +44,20 @@ extension FormValidation on String {
 
   bool get isValidPhone => RegExp(r'(^(?:[+0]9)?[0-9]{10}$)').hasMatch(this);
 }
+
+extension DateTimeExtensions on DateTime {
+  String formatTime() {
+    final now = DateTime.now();
+    final difference = now.difference(this);
+
+    if (difference.inDays == 0) {
+      return DateFormat.jm().format(this);
+    } else if (difference.inDays == 1) {
+      return AppConstants.yesterday;
+    } else if (difference.inDays < 7) {
+      return DateFormat.E().format(this);
+    } else {
+      return DateFormat.MMMd().format(this);
+    }
+  }
+}

@@ -12,7 +12,20 @@
           "package_name": "com.example.repalogic_messanger"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "665077614024-r2h3h6g1osk1tk98b857ojb2cvsap030.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.repalogic_messanger",
+            "certificate_hash": "f37db9f63af4d6f2a6748f40490c0fb6c657150e"
+          }
+        },
+        {
+          "client_id": "665077614024-atfmj5uhbjnvhjrct31c86jj60kn8cqm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAaBELwMahoykq0RYlXeRAilrYvnWioVeE"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "665077614024-atfmj5uhbjnvhjrct31c86jj60kn8cqm.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "665077614024-sse92bi7r0fb63m5t0qpgqld07183mvg.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.repalogicAuthenticator"
+              }
+            }
+          ]
         }
       }
     }

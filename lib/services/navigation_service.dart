@@ -2,6 +2,11 @@ import 'package:repalogic_messanger/utilities/common_exports.dart';
 
 class Routes {
   static const String splashScreen = "/";
+  static const String loginScreen = "/login";
+  static const String chatRoomsScreen = "/chatRooms";
+  static const String createChatRoomScreen = "/createChatRoom";
+  static const String chatScreen = "/chat";
+  static const String inviteUsersScreen = "/inviteUsers";
 }
 
 class NavigationService {
@@ -14,6 +19,22 @@ class NavigationService {
     switch (settings.name) {
       case Routes.splashScreen:
         return MaterialPageRoute(builder: (_) => const SplashScreen());
+      case Routes.loginScreen:
+        return MaterialPageRoute(builder: (_) => const LoginScreen());
+      case Routes.chatRoomsScreen:
+        return MaterialPageRoute(builder: (_) => const ChatRoomsScreen());
+      case Routes.createChatRoomScreen:
+        return MaterialPageRoute(builder: (_) => const CreateChatRoomScreen());
+      case Routes.chatScreen:
+        final chatRoom = settings.arguments as ChatRoomModel;
+        return MaterialPageRoute(
+          builder: (_) => ChatScreen(chatRoom: chatRoom),
+        );
+      case Routes.inviteUsersScreen:
+        final chatRoom = settings.arguments as ChatRoomModel;
+        return MaterialPageRoute(
+          builder: (_) => InviteUsersScreen(chatRoom: chatRoom),
+        );
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
