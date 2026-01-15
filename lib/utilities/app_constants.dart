@@ -66,4 +66,9 @@ class AppConstants {
   // Default Values
   static const String defaultUserInitial = 'U';
   static const String defaultChatRoomInitial = 'C';
+
+  // Firestore Collection Names
+  static const String collectionUsers = 'users';
+  static const String collectionChatRooms = 'chatRooms';
+  static const String collectionMessages = 'messages';
 }

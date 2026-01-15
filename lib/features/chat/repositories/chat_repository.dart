@@ -27,7 +27,7 @@ class ChatRepository {
       );
 
       await _firestore
-          .collection('chatRooms')
+          .collection(AppConstants.collectionChatRooms)
           .doc(roomId)
           .set(chatRoom.toMap());
 
@@ -42,7 +42,7 @@ class ChatRepository {
   Stream<List<ChatRoomModel>> getChatRooms(String userId) {
     try {
       return _firestore
-          .collection('chatRooms')
+          .collection(AppConstants.collectionChatRooms)
           .where('participants', arrayContains: userId)
           .orderBy('lastMessageTime', descending: true)
           .snapshots()
@@ -60,7 +60,10 @@ class ChatRepository {
   // Get a single chat room
   Future<ChatRoomModel?> getChatRoom(String roomId) async {
     try {
-      final doc = await _firestore.collection('chatRooms').doc(roomId).get();
+      final doc = await _firestore
+          .collection(AppConstants.collectionChatRooms)
+          .doc(roomId)
+          .get();
       if (doc.exists && doc.data() != null) {
         return ChatRoomModel.fromMap(doc.data()!);
       }
@@ -74,14 +77,16 @@ class ChatRepository {
   // Get a single chat room as stream for real-time updates
   Stream<ChatRoomModel?> getChatRoomStream(String roomId) {
     try {
-      return _firestore.collection('chatRooms').doc(roomId).snapshots().map((
-        doc,
-      ) {
-        if (doc.exists && doc.data() != null) {
-          return ChatRoomModel.fromMap(doc.data()!);
-        }
-        return null;
-      });
+      return _firestore
+          .collection(AppConstants.collectionChatRooms)
+          .doc(roomId)
+          .snapshots()
+          .map((doc) {
+            if (doc.exists && doc.data() != null) {
+              return ChatRoomModel.fromMap(doc.data()!);
+            }
+            return null;
+          });
     } catch (e) {
       log('Error getting chat room stream: $e');
       return Stream.value(null);
@@ -95,7 +100,9 @@ class ChatRepository {
     required String userName,
   }) async {
     try {
-      final roomRef = _firestore.collection('chatRooms').doc(roomId);
+      final roomRef = _firestore
+          .collection(AppConstants.collectionChatRooms)
+          .doc(roomId);
 
       await roomRef.update({
         'participants': FieldValue.arrayUnion([userId]),
@@ -130,16 +137,19 @@ class ChatRepository {
       );
 
       await _firestore
-          .collection('chatRooms')
+          .collection(AppConstants.collectionChatRooms)
           .doc(chatRoomId)
-          .collection('messages')
+          .collection(AppConstants.collectionMessages)
           .doc(messageId)
           .set(message.toMap());
 
-      await _firestore.collection('chatRooms').doc(chatRoomId).update({
-        'lastMessage': text,
-        'lastMessageTime': Timestamp.fromDate(message.timestamp),
-      });
+      await _firestore
+          .collection(AppConstants.collectionChatRooms)
+          .doc(chatRoomId)
+          .update({
+            'lastMessage': text,
+            'lastMessageTime': Timestamp.fromDate(message.timestamp),
+          });
 
       return message;
     } catch (e) {
@@ -152,9 +162,9 @@ class ChatRepository {
   Stream<List<MessageModel>> getMessages(String chatRoomId) {
     try {
       return _firestore
-          .collection('chatRooms')
+          .collection(AppConstants.collectionChatRooms)
           .doc(chatRoomId)
-          .collection('messages')
+          .collection(AppConstants.collectionMessages)
           .orderBy('timestamp', descending: true)
           .snapshots()
           .map((snapshot) {
@@ -174,14 +184,14 @@ class ChatRepository {
       if (query.isEmpty) return [];
 
       final emailQuery = await _firestore
-          .collection('users')
+          .collection(AppConstants.collectionUsers)
           .where('email', isGreaterThanOrEqualTo: query.toLowerCase())
           .where('email', isLessThan: '${query.toLowerCase()}z')
           .limit(10)
           .get();
 
       final nameQuery = await _firestore
-          .collection('users')
+          .collection(AppConstants.collectionUsers)
           .where('displayName', isGreaterThanOrEqualTo: query)
           .where('displayName', isLessThan: '${query}z')
           .limit(10)
@@ -209,7 +219,7 @@ class ChatRepository {
   // Get all users (for invitation)
   Future<List<UserModel>> getAllUsers({String? excludeUserId}) async {
     try {
-      final query = _firestore.collection('users').limit(50);
+      final query = _firestore.collection(AppConstants.collectionUsers);
       final snapshot = await query.get();
 
       final users = snapshot.docs

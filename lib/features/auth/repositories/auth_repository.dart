@@ -73,7 +73,9 @@ class AuthRepository {
   // Save or update user in Firestore
   Future<void> _saveUserToFirestore(UserModel user) async {
     try {
-      final userDoc = _firestore.collection('users').doc(user.uid);
+      final userDoc = _firestore
+          .collection(AppConstants.collectionUsers)
+          .doc(user.uid);
       final docSnapshot = await userDoc.get();
 
       if (!docSnapshot.exists) {
@@ -94,7 +96,10 @@ class AuthRepository {
   // Get user model from Firestore
   Future<UserModel?> getUserModel(String uid) async {
     try {
-      final doc = await _firestore.collection('users').doc(uid).get();
+      final doc = await _firestore
+          .collection(AppConstants.collectionUsers)
+          .doc(uid)
+          .get();
       if (doc.exists && doc.data() != null) {
         return UserModel.fromMap(doc.data()!);
       }
