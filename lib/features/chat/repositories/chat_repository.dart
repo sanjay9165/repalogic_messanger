@@ -187,14 +187,12 @@ class ChatRepository {
           .collection(AppConstants.collectionUsers)
           .where('email', isGreaterThanOrEqualTo: query.toLowerCase())
           .where('email', isLessThan: '${query.toLowerCase()}z')
-          .limit(10)
           .get();
 
       final nameQuery = await _firestore
           .collection(AppConstants.collectionUsers)
           .where('displayName', isGreaterThanOrEqualTo: query)
           .where('displayName', isLessThan: '${query}z')
-          .limit(10)
           .get();
 
       final users = <String, UserModel>{};
